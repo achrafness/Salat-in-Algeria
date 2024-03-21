@@ -1,10 +1,15 @@
-const Card = ({time,salat}) => {
+const Card = ({time,salat , image}) => {
+  const removeCte = () => {
+    time = time.replace(/\s*\(CET\)/, "");
+  }
+  removeCte();
   return (
-    <div className="p-6 container mx-auto text-white bg-orange-300 h-[200px] w-[200px] flex flex-col rounded-2xl items-center relative">
-      <p className="text-lg">{salat}</p>
-      <h1 className="text-5xl items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        {time}
-      </h1>
+    <div className=" bg-white text-slate-700 h-[200px] w-[200px]">
+      <img src={image} alt="salat img" className="h-3/5 w-full object-cover" />
+      <div className="h-2/5 flex flex-col justify-center items-center">
+        <p>{salat}</p>
+        <h1>{time}</h1>
+      </div>
     </div>
   );
 };
