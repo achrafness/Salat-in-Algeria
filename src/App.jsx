@@ -73,7 +73,7 @@ const wilayaNames = [
 
   const fetchData = async (parmCity) => {
     const result = await axios.get(
-      `http://api.aladhan.com/v1/calendarByCity?country=dz&city=${parmCity}`
+      `https://api.aladhan.com/v1/calendarByCity?country=dz&city=${parmCity}`
     );
     const currentDate = new Date();
     const dayOfMonth = currentDate.getDate();
