@@ -1,83 +1,84 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Card from  "./Card"
+import Card from "./Card"
 import './app.css'
 const App = () => {
   const [city, setCity] = useState({
     english: "adrar",
     arabic: "أدرار",
   });
-  const [data,setDate] = useState([])
+  const [data, setDate] = useState([])
   const [timeOfSalat, setTimeOfSalat] = useState("");
-
-const wilayaNames = [
-  { english: "adrar", arabic: "أدرار" },
-  { english: "chlef", arabic: "الشلف" },
-  { english: "laghouat", arabic: "الأغواط" },
-  { english: "oum-el-bouaghi", arabic: "أم البواقي" },
-  { english: "batna", arabic: "باتنة" },
-  { english: "bejaia", arabic: "بجاية" },
-  { english: "biskra", arabic: "بسكرة" },
-  { english: "bechar", arabic: "بشار" },
-  { english: "blida", arabic: "البليدة" },
-  { english: "bouira", arabic: "البويرة" },
-  { english: "tamanrasset", arabic: "تمنراست" },
-  { english: "tebessa", arabic: "تبسة" },
-  { english: "tlemcen", arabic: "تلمسان" },
-  { english: "tiaret", arabic: "تيارت" },
-  { english: "tizi-ouzou", arabic: "تيزي وزو" },
-  { english: "algiers", arabic: "الجزائر" },
-  { english: "djelfa", arabic: "الجلفة" },
-  { english: "jijel", arabic: "جيجل" },
-  { english: "setif", arabic: "سطيف" },
-  { english: "saïda", arabic: "سعيدة" },
-  { english: "skikda", arabic: "سكيكدة" },
-  { english: "sidi-bel-abbes", arabic: "سيدي بلعباس" },
-  { english: "annaba", arabic: "عنابة" },
-  { english: "guelma", arabic: "قالمة" },
-  { english: "constantine", arabic: "قسنطينة" },
-  { english: "medea", arabic: "المدية" },
-  { english: "mostaganem", arabic: "مستغانم" },
-  { english: "msila", arabic: "المسيلة" },
-  { english: "mascara", arabic: "معسكر" },
-  { english: "ouargla", arabic: "ورقلة" },
-  { english: "oran", arabic: "وهران" },
-  { english: "el-bayadh", arabic: "البيض" },
-  { english: "illizi", arabic: "اليزي" },
-  { english: "bordj-bou-arreridj", arabic: "برج بوعريريج" },
-  { english: "boumerdes", arabic: "بومرداس" },
-  { english: "el-tarf", arabic: "الطارف" },
-  { english: "tindouf", arabic: "تندوف" },
-  { english: "tissemsilt", arabic: "تيسمسيلت" },
-  { english: "el-oued", arabic: "الوادي" },
-  { english: "khenchela", arabic: "خنشلة" },
-  { english: "souk-ahras", arabic: "سوق أهراس" },
-  { english: "tipaza", arabic: "تيبازة" },
-  { english: "mila", arabic: "ميلة" },
-  { english: "aïn-defla", arabic: "عين الدفلى" },
-  { english: "naama", arabic: "النعامة" },
-  { english: "aïn-temouchent", arabic: "عين تموشنت" },
-  { english: "ghardaia", arabic: "غرداية" },
-  { english: "relizane", arabic: "غليزان" },
-  { english: "timimoun", arabic: "تميمون" },
-  { english: "bordj-badji-mokhtar", arabic: "برج بادجي مختار" },
-  { english: "ouled-djellal", arabic: "أولاد جلال" },
-  { english: "béni-abbès", arabic: "بني عباس" },
-  { english: "in-salah", arabic: "إن صالح" },
-  { english: "in-guezzam", arabic: "إن قزام" },
-  { english: "touggourt", arabic: "تقرت" },
-  { english: "djanet", arabic: "جانت" },
-  { english: "el-mghaier", arabic: "المغير" },
-  { english: "el-meniaa", arabic: "المنيعة" },
-];
-
+  const removeCte = (time) => {
+    return time ? time.replace(/\s*\(CET\)/, "") : ""
+  }
+  const wilayaNames = [
+    { english: "adrar", arabic: "أدرار" },
+    { english: "chlef", arabic: "الشلف" },
+    { english: "laghouat", arabic: "الأغواط" },
+    { english: "oum-el-bouaghi", arabic: "أم البواقي" },
+    { english: "batna", arabic: "باتنة" },
+    { english: "bejaia", arabic: "بجاية" },
+    { english: "biskra", arabic: "بسكرة" },
+    { english: "bechar", arabic: "بشار" },
+    { english: "blida", arabic: "البليدة" },
+    { english: "bouira", arabic: "البويرة" },
+    { english: "tamanrasset", arabic: "تمنراست" },
+    { english: "tebessa", arabic: "تبسة" },
+    { english: "tlemcen", arabic: "تلمسان" },
+    { english: "tiaret", arabic: "تيارت" },
+    { english: "tizi-ouzou", arabic: "تيزي وزو" },
+    { english: "algiers", arabic: "الجزائر" },
+    { english: "djelfa", arabic: "الجلفة" },
+    { english: "jijel", arabic: "جيجل" },
+    { english: "setif", arabic: "سطيف" },
+    { english: "saïda", arabic: "سعيدة" },
+    { english: "skikda", arabic: "سكيكدة" },
+    { english: "sidi-bel-abbes", arabic: "سيدي بلعباس" },
+    { english: "annaba", arabic: "عنابة" },
+    { english: "guelma", arabic: "قالمة" },
+    { english: "constantine", arabic: "قسنطينة" },
+    { english: "medea", arabic: "المدية" },
+    { english: "mostaganem", arabic: "مستغانم" },
+    { english: "msila", arabic: "المسيلة" },
+    { english: "mascara", arabic: "معسكر" },
+    { english: "ouargla", arabic: "ورقلة" },
+    { english: "oran", arabic: "وهران" },
+    { english: "el-bayadh", arabic: "البيض" },
+    { english: "illizi", arabic: "اليزي" },
+    { english: "bordj-bou-arreridj", arabic: "برج بوعريريج" },
+    { english: "boumerdes", arabic: "بومرداس" },
+    { english: "el-tarf", arabic: "الطارف" },
+    { english: "tindouf", arabic: "تندوف" },
+    { english: "tissemsilt", arabic: "تيسمسيلت" },
+    { english: "el-oued", arabic: "الوادي" },
+    { english: "khenchela", arabic: "خنشلة" },
+    { english: "souk-ahras", arabic: "سوق أهراس" },
+    { english: "tipaza", arabic: "تيبازة" },
+    { english: "mila", arabic: "ميلة" },
+    { english: "aïn-defla", arabic: "عين الدفلى" },
+    { english: "naama", arabic: "النعامة" },
+    { english: "aïn-temouchent", arabic: "عين تموشنت" },
+    { english: "ghardaia", arabic: "غرداية" },
+    { english: "relizane", arabic: "غليزان" },
+    { english: "timimoun", arabic: "تميمون" },
+    { english: "bordj-badji-mokhtar", arabic: "برج بادجي مختار" },
+    { english: "ouled-djellal", arabic: "أولاد جلال" },
+    { english: "béni-abbès", arabic: "بني عباس" },
+    { english: "in-salah", arabic: "إن صالح" },
+    { english: "in-guezzam", arabic: "إن قزام" },
+    { english: "touggourt", arabic: "تقرت" },
+    { english: "djanet", arabic: "جانت" },
+    { english: "el-mghaier", arabic: "المغير" },
+    { english: "el-meniaa", arabic: "المنيعة" },
+  ];
   const fetchData = async (parmCity) => {
     const result = await axios.get(
       `https://api.aladhan.com/v1/calendarByCity?country=dz&city=${parmCity}`
     );
     const currentDate = new Date();
     const dayOfMonth = currentDate.getDate();
-    return result.data.data[dayOfMonth -1];
+    return result.data.data[dayOfMonth - 1];
   };
   useEffect(() => {
     fetchData(city.english)
@@ -104,7 +105,7 @@ const wilayaNames = [
         <p className="text-white m-6 font-semibold text-5xl">{city.arabic}</p>
         <p className="text-slate-400 m-2 mr-6 font-normal text-xl">{data}</p>
       </div>
-      <div className="z-10 m-6 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-5 gap-4 ">
+      <div className="z-10 m-6 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-5 gap-4 " dir="ltr">
         <Card
           salat="العشاء"
           time={timeOfSalat.Isha ? timeOfSalat.Isha : ""}
@@ -151,6 +152,15 @@ const wilayaNames = [
             </option>
           ))}
         </select>
+      </div>
+      <div className="night w-full flex gap-4 px-12 z-10 justify-center text-white text-center">
+        <div>{removeCte(timeOfSalat.Firstthird)}</div>
+        <div>النصف الاول من اليل</div>
+        <div>{removeCte(timeOfSalat.Midnight)}</div>
+        <div>النصف الثاني من اليل</div>
+        <div>{removeCte(timeOfSalat.Lastthird)}</div>
+        <div>النصف الثالث من اليل</div>
+        <div>{removeCte(timeOfSalat.Fajr)}</div>
       </div>
     </div>
   );

@@ -5,3 +5,9 @@
 *{
     font-family: "Reem Kufi", sans-serif;
 }
+
+.night > div:nth-child(2n) {
+    width: calc(30%);
+    border-bottom: 2px white solid;
+    padding-bottom: 5px;
+}

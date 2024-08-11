@@ -1,5 +1,5 @@
 .home{
-    background-image: url("../public/one.png");
+    background-image: url("./one.png");
     background-size: cover;
 }
 .home::before{
